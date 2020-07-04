@@ -8,7 +8,8 @@ namespace CoreHambusCommonLibrary.Model
     public  SigRConnection? sigConnect { get; set; }
     public  HubConnection? connection { get; set; }
 
-    public string? MasterHost {get; set;}
-    public int MasterPort { get; set; }
+    public string MasterHost { get; set; } = "localhost";
+    public int MasterPort { get; set; } = 7300;
+    public string Name  { get; set; } = "";
   }
 }

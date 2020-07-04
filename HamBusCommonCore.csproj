@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <Folder Include="DataLib\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

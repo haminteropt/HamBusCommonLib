@@ -1,7 +1,7 @@
 ﻿using System.IO.Ports;
 using BusMaster.Model;
 
-namespace HambusCommonLibrary
+namespace HamBusCommonCore.Model
 {
   public class RigConf : BusConfigBase
   {
