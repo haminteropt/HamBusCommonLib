@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CoreHambusCommonLibrary.Networking;
+﻿using CoreHambusCommonLibrary.Networking;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CoreHambusCommonLibrary.Model

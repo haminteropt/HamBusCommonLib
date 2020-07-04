@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace HambusCommonLibrary
+namespace HamBusCommmonCore
+
 {
   public class RigState : ICloneable
   {

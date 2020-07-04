@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BusMaster.Model
+﻿namespace BusMaster.Model
 {
   public enum BusType { Unknown=0, BusMaster, RigBus, VirtualRigBus, LogBus, RotoBus, ClusterBus, UI}
   public class BusMasterGroups

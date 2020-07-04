@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamBusCommon", "HamBusCommon.csproj", "{3518B6A7-9C8B-49DD-AA93-01D3F9D637D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamBusCommonCore", "HamBusCommonCore.csproj", "{3518B6A7-9C8B-49DD-AA93-01D3F9D637D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

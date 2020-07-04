@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CoreHambusCommonLibrary.Model;
-using HambusCommonLibrary;
+using HamBusCommmonCore;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CoreHambusCommonLibrary.Networking
