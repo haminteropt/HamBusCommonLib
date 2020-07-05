@@ -9,15 +9,15 @@ using HambusCommonLibrary;
 
 namespace HamBusCommonCore.Model
 {
-  public abstract class RigBase
+  public abstract class RigControlBase
   {
-  public RigBase(SigRConnection sigRConnection)
+  public RigControlBase(SigRConnection sigRConnection)
     {
       sigConnect = sigRConnection;
     }
     public RigState state = new RigState();
     public RigState prevState = new RigState();
-    public int pollTimer { get; set; } = 2000;
+    public int pollTimer { get; set; } = 500;
     public RigConf? portConf;
     protected SerialPort? serialPort;
     protected SigRConnection? sigConnect = null;
@@ -87,13 +87,20 @@ namespace HamBusCommonCore.Model
     public abstract void PollRig();
     public virtual void OpenPort(RigConf port)
     {
-      portConf = port;
+      if (serialPort != null && serialPort.IsOpen)
+      {
+        serialPort.Close();
+      }
+      else {
+        if (serialPort == null) 
+          serialPort = new SerialPort();
+      }
+        portConf = port;
       StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
       Thread readThread = new Thread(ReadSerialPortThread);
       Thread pollThread = new Thread(PollRig);
 
-      // Create a new SerialPort object with default settings.
-      serialPort = new SerialPort();
+
 
       // Allow the user to set the appropriate properties.
       serialPort.PortName = port.CommPortName;
