@@ -17,6 +17,8 @@ namespace HamBusCommonCore.Model
     }
     public RigState state = new RigState();
     public RigState prevState = new RigState();
+
+    #region connection info
     public int pollTimer { get; set; } = 500;
     public RigConf? portConf;
     protected SerialPort? serialPort;
@@ -25,7 +27,7 @@ namespace HamBusCommonCore.Model
 
     abstract protected void initStartupState();
     public abstract void ReadSerialPortThread();
-    protected void SendSerial(string str)
+    protected virtual void SendSerial(string str)
     {
       if (serialPort == null) return;
       serialPort.Write(str);
@@ -85,6 +87,25 @@ namespace HamBusCommonCore.Model
       }
     }
     public abstract void PollRig();
+    #endregion
+
+    #region commands
+    public abstract long Freq { get; set; }
+    public abstract long FreqA { get; set; }
+    public abstract long FreqB { get; set; }
+    public abstract string Mode { get; set; }
+    public abstract int Pitch { get; set; }
+    public abstract string? RigType { get; set; }
+    public abstract string? Rit { get; set; }
+    public abstract int RitOffset { get; set; }
+    public abstract string? Status { get; set; }
+    public abstract string? StatusStr { get; set; }
+    public abstract string? Split { get; set; }
+    public abstract bool Tx { get; set; }
+    public abstract string? Vfo { get; set; }
+    public abstract string? Xit { get; set; }
+
+    #endregion
     public virtual void OpenPort(RigConf port)
     {
       if (serialPort != null && serialPort.IsOpen)

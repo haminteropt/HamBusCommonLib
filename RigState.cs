@@ -5,9 +5,6 @@ namespace HamBusCommmonCore
 {
   public class RigState : ICloneable
   {
-    public string RigName { get; set; } = "";
-    public int RigId { get; set; }
-    public string? Group { get; set; }
     public long Freq { get; set; }
     public long FreqA { get; set; }
     public long FreqB { get; set; }
