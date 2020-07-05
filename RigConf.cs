@@ -19,7 +19,7 @@ namespace HamBusCommonCore.Model
     }
     private RigConf() { }
     public string? Name { get; set; }
-    public string? PortName { get; set; }
+    public string? CommPortName { get; set; }
     public int? BaudRate { get; set; } = 4800;
     public string? Parity { get; set; } = "none";
     public int? DataBits { get; set; }

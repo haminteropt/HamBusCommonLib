@@ -96,7 +96,7 @@ namespace HamBusCommonCore.Model
       serialPort = new SerialPort();
 
       // Allow the user to set the appropriate properties.
-      serialPort.PortName = port.PortName;
+      serialPort.PortName = port.CommPortName;
       if (port.BaudRate != null)
         serialPort.BaudRate = (int)port.BaudRate;
       serialPort.Parity = ToParity(port.Parity!);
