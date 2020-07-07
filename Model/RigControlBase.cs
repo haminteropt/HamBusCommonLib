@@ -14,6 +14,7 @@ namespace HamBusCommonCore.Model
   public RigControlBase(SigRConnection sigRConnection)
     {
       sigConnect = sigRConnection;
+        
     }
     public RigState state = new RigState();
     public RigState prevState = new RigState();
@@ -89,21 +90,9 @@ namespace HamBusCommonCore.Model
     public abstract void PollRig();
     #endregion
 
+    public RigState State { get; set; } = new RigState();
     #region commands
-    public abstract long Freq { get; set; }
-    public abstract long FreqA { get; set; }
-    public abstract long FreqB { get; set; }
-    public abstract string Mode { get; set; }
-    public abstract int Pitch { get; set; }
-    public abstract string? RigType { get; set; }
-    public abstract string? Rit { get; set; }
-    public abstract int RitOffset { get; set; }
-    public abstract string? Status { get; set; }
-    public abstract string? StatusStr { get; set; }
-    public abstract string? Split { get; set; }
-    public abstract bool Tx { get; set; }
-    public abstract string? Vfo { get; set; }
-    public abstract string? Xit { get; set; }
+
 
     #endregion
     public virtual void OpenPort(RigConf port)
