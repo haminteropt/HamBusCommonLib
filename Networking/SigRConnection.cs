@@ -64,8 +64,8 @@ namespace CoreHambusCommonLibrary.Networking
       Console.WriteLine("Sending state");
       try
       {
-        if (cb != null)
-          connection.On<string>("loginResponse", cb);
+        //if (cb != null)
+        //  connection.On<string>("loginResponse", cb);
         await connection.InvokeAsync("RadioStateChange", state);
       }
       catch (Exception ex)

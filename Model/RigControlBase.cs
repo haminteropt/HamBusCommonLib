@@ -13,18 +13,20 @@ namespace HamBusCommonCore.Model
   {
   public RigControlBase(SigRConnection sigRConnection)
     {
-      sigConnect = sigRConnection;
-        
+      sigConnect = sigRConnection;      
     }
-    public RigState state = new RigState();
-    public RigState prevState = new RigState();
 
+    public RigState prevState = new RigState();
+    public abstract void SetState(RigState state);
+
+    public string? Name {get; set;}
     #region connection info
-    public int pollTimer { get; set; } = 500;
+    public int PollTimer { get; set; } = 500;
     public RigConf? portConf;
     protected SerialPort? serialPort;
     protected SigRConnection? sigConnect = null;
     protected bool continueReadingSerialPort;
+    public RigState State { get; set; } = new RigState();
 
     abstract protected void initStartupState();
     public abstract void ReadSerialPortThread();
@@ -60,7 +62,6 @@ namespace HamBusCommonCore.Model
       switch (stop.ToLower())
       {
         case "none":
-
           return StopBits.None;
         case "one":
         case "1":
@@ -94,7 +95,7 @@ namespace HamBusCommonCore.Model
     public abstract void PollRig();
     #endregion
 
-    public RigState State { get; set; } = new RigState();
+
     #region commands
 
 
@@ -114,8 +115,6 @@ namespace HamBusCommonCore.Model
       Thread readThread = new Thread(ReadSerialPortThread);
       Thread pollThread = new Thread(PollRig);
 
-
-
       // Allow the user to set the appropriate properties.
       serialPort.PortName = port.commPortName;
       if (port.baudRate != null)
@@ -124,7 +123,6 @@ namespace HamBusCommonCore.Model
       serialPort.DataBits = 8;
       if (port.stopBits != null)
         serialPort.StopBits = ToStop(port.stopBits);
-
 
       serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
 
