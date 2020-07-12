@@ -60,12 +60,16 @@ namespace HamBusCommonCore.Model
       switch (stop.ToLower())
       {
         case "none":
+
           return StopBits.None;
         case "one":
+        case "1":
           return StopBits.One;
         case "onepointfive":
+        case "1.5":
           return StopBits.OnePointFive;
         case "two":
+        case "2":
           return StopBits.Two;
         default:
           return StopBits.None;
@@ -113,16 +117,16 @@ namespace HamBusCommonCore.Model
 
 
       // Allow the user to set the appropriate properties.
-      serialPort.PortName = port.CommPortName;
-      if (port.BaudRate != null)
-        serialPort.BaudRate = (int)port.BaudRate;
-      serialPort.Parity = ToParity(port.Parity!);
+      serialPort.PortName = port.commPortName;
+      if (port.baudRate != null)
+        serialPort.BaudRate = (int)port.baudRate;
+      serialPort.Parity = ToParity(port.parity!);
       serialPort.DataBits = 8;
-      if (port.StopBits != null)
-        serialPort.StopBits = ToStop(port.StopBits);
+      if (port.stopBits != null)
+        serialPort.StopBits = ToStop(port.stopBits);
 
 
-      serialPort.Handshake = port.Handshake == null ? Handshake.None : (Handshake)port.Handshake;
+      serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
 
       serialPort.Open();
       continueReadingSerialPort = true;

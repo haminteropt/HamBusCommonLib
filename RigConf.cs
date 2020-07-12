@@ -18,14 +18,14 @@ namespace HamBusCommonCore.Model
       }
     }
     private RigConf() { }
-    public string? Name { get; set; }
-    public string? CommPortName { get; set; }
-    public int? BaudRate { get; set; } = 4800;
-    public string? Parity { get; set; } = "none";
-    public int? DataBits { get; set; }
-    public string? StopBits { get; set; } = "one";
-    public Handshake? Handshake { get; set; }
-    public int? ReadTimeout { get; set; }
-    public int? WriteTimeout { get; set; } = null;
+    public string? name { get; set; }
+    public string? commPortName { get; set; }
+    public int? baudRate { get; set; } = 4800;
+    public string? parity { get; set; } = "none";
+    public int? dataBits { get; set; }
+    public string? stopBits { get; set; } = "one";
+    public Handshake? handshake { get; set; }
+    public int? readTimeout { get; set; }
+    public int? writeTimeout { get; set; } = null;
   }
 }
