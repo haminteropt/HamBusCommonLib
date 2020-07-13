@@ -97,8 +97,10 @@ namespace HamBusCommonCore.Model
 
 
     #region commands
-
-
+    public abstract void SetFrequency(long freq);
+    public abstract void SetFrequencyA(long freq);
+    public abstract void SetFrequencyB(long freq);
+    public abstract void SetMode(string mode);
     #endregion
     public virtual void OpenPort(RigConf port)
     {
