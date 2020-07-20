@@ -9,7 +9,7 @@ using HambusCommonLibrary;
 
 namespace HamBusCommonCore.Model
 {
-  public abstract class RigControlBase
+  public abstract class RigControlBase : HamBusBase
   {
   public RigControlBase(SigRConnection sigRConnection)
     {
