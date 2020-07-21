@@ -1,14 +1,40 @@
 ﻿using System;
+using System.Reactive.Subjects;
+using System.Text.Json;
 using System.Threading.Tasks;
+using CoreHambusCommonLibrary.DataLib;
 using CoreHambusCommonLibrary.Model;
 using HamBusCommmonCore;
+using HamBusCommonCore.Model;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace CoreHambusCommonLibrary.Networking
 {
   public class SigRConnection
   {
+    #region singleton
+    private static SigRConnection? instance = null;
+    private static readonly object padlock = new object();
+    public static SigRConnection Instance
+    {
+      get
+      {
+        lock (padlock)
+        {
+          if (instance == null)
+          {
+            instance = new SigRConnection();
+
+          }
+          return instance;
+        }
+      }
+    }
+    #endregion
     public HubConnection? connection = null;
+    public ReplaySubject<RigState> RigState__ { get; set; } = new System.Reactive.Subjects.ReplaySubject<RigState>(1);
+    public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
+    public ReplaySubject<RigConf> RigConfig__ { get; set; } = new ReplaySubject<RigConf>(1);
     public async Task<HubConnection> StartConnection(string url)
     {
 
@@ -26,16 +52,16 @@ namespace CoreHambusCommonLibrary.Networking
       {
         Console.WriteLine($"Connection Lost attempting to reconnect: {error.Message}");
 
-              // Notify users the connection was lost and the client is reconnecting.
-              // Start queuing or dropping messages.
+        // Notify users the connection was lost and the client is reconnecting.
+        // Start queuing or dropping messages.
 
-              return Task.CompletedTask;
+        return Task.CompletedTask;
       };
 
       try
       {
         await connection.StartAsync();
-        connection.On<HamBusError>("ErrorReport", ErrorReport);
+        SignalHandler();
       }
       catch (Exception ex)
       {
@@ -48,24 +74,33 @@ namespace CoreHambusCommonLibrary.Networking
       return connection;
     }
 
-    private void ErrorReport(HamBusError error)
+    private void SignalHandler()
     {
-      Console.WriteLine($"Error: {error.ErrorNum}: {error.Message}");
-      Environment.Exit((int) error.ErrorNum);
+      connection.On<HamBusError>("ErrorReport", (HamBusError error) =>
+      {
+        HBErrors__.OnNext(error);
+        Console.WriteLine($"Error: {error.ErrorNum}: {error.Message}");
+      });
 
+      connection.On<RigState>("state", (RigState state) =>
+      {
+        RigState__.OnNext(state);
+      });
+      connection.On<BusConfigurationDB>("ReceiveConfiguration", (busConf) =>
+      {
+        var conf = JsonSerializer.Deserialize<RigConf>(busConf.Configuration);
+        RigConfig__.OnNext(conf);
+        //rig!.OpenPort(conf);
+      });
     }
 
-    private void loginRespCB(string message)
-    {
-      Console.WriteLine(message);
-    }
-    public async void sendRigState(RigState state, Action<string>? cb = null)
+
+    public async void SendRigState(RigState state, Action<string>? cb = null)
     {
       Console.WriteLine("Sending state");
       try
       {
-        //if (cb != null)
-        //  connection.On<string>("loginResponse", cb);
+
         await connection.InvokeAsync("RadioStateChange", state);
       }
       catch (Exception ex)

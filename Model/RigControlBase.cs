@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO.Ports;
-using System.Text;
 using System.Threading;
 using CoreHambusCommonLibrary.Networking;
 using HamBusCommmonCore;
-using HambusCommonLibrary;
 
 namespace HamBusCommonCore.Model
 {
   public abstract class RigControlBase : HamBusBase
   {
-  public RigControlBase(SigRConnection sigRConnection)
+    public RigControlBase()
     {
-      sigConnect = sigRConnection;      
     }
 
     public RigState prevState = new RigState();
     public abstract void SetState(RigState state);
+    private Thread? readThread;
+    private Thread? pollThread;
 
-    public string? Name {get; set;}
+    public SigRConnection SigRCon = SigRConnection.Instance;
+
+    public string? Name { get; set; }
     #region connection info
     public int PollTimer { get; set; } = 500;
     public RigConf? portConf;
@@ -104,34 +104,43 @@ namespace HamBusCommonCore.Model
     #endregion
     public virtual void OpenPort(RigConf port)
     {
-      if (serialPort != null && serialPort.IsOpen)
+      SigRCon.RigConfig__.Subscribe<RigConf>((conf) =>
       {
-        serialPort.Close();
-      }
-      else {
-        if (serialPort == null) 
-          serialPort = new SerialPort();
-      }
+
+        if (serialPort != null && serialPort.IsOpen)
+        {
+          serialPort.Close();
+          if (readThread != null)
+            readThread.Abort();
+          if (pollThread != null)
+            pollThread.Abort();
+        }
+        else
+        {
+          if (serialPort == null)
+            serialPort = new SerialPort();
+        }
         portConf = port;
-      StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
-      Thread readThread = new Thread(ReadSerialPortThread);
-      Thread pollThread = new Thread(PollRig);
+        StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
+        readThread = new Thread(ReadSerialPortThread);
+        pollThread = new Thread(PollRig);
 
-      // Allow the user to set the appropriate properties.
-      serialPort.PortName = port.commPortName;
-      if (port.baudRate != null)
-        serialPort.BaudRate = (int)port.baudRate;
-      serialPort.Parity = ToParity(port.parity!);
-      serialPort.DataBits = 8;
-      if (port.stopBits != null)
-        serialPort.StopBits = ToStop(port.stopBits);
+        // Allow the user to set the appropriate properties.
+        serialPort.PortName = port.commPortName;
+        if (port.baudRate != null)
+          serialPort.BaudRate = (int)port.baudRate;
+        serialPort.Parity = ToParity(port.parity!);
+        serialPort.DataBits = 8;
+        if (port.stopBits != null)
+          serialPort.StopBits = ToStop(port.stopBits);
 
-      serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
+        serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
 
-      serialPort.Open();
-      continueReadingSerialPort = true;
-      readThread.Start();
-      pollThread.Start();
+        serialPort.Open();
+        continueReadingSerialPort = true;
+        readThread.Start();
+        pollThread.Start();
+      });
     }
   }
 }

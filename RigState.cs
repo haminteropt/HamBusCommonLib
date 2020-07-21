@@ -5,7 +5,7 @@ namespace HamBusCommmonCore
 {
   public class RigState : ICloneable
   {
-
+  #nullable enable
     public string? Name {get; set;}
     public long Freq { get; set; }
     public long FreqA { get; set; }
@@ -21,7 +21,7 @@ namespace HamBusCommmonCore
     public bool Tx { get; set; }
     public string? Vfo { get; set; }
     public string? Xit { get; set; }
-
+    #nullable disable
     public Object Clone()
     {
       return (RigState)MemberwiseClone();
