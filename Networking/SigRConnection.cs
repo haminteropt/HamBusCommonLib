@@ -35,6 +35,8 @@ namespace CoreHambusCommonLibrary.Networking
     public ReplaySubject<RigState> RigState__ { get; set; } = new System.Reactive.Subjects.ReplaySubject<RigState>(1);
     public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
     public ReplaySubject<RigConf> RigConfig__ { get; set; } = new ReplaySubject<RigConf>(1);
+    public Subject<LockModel> LockModel__ { get; set; } = new Subject<LockModel>();
+
     public async Task<HubConnection> StartConnection(string url)
     {
 
@@ -68,9 +70,6 @@ namespace CoreHambusCommonLibrary.Networking
         Console.WriteLine(ex.Message);
         Environment.Exit(-1);
       }
-      // this needs to go else where
-
-
       return connection;
     }
 
@@ -82,15 +81,13 @@ namespace CoreHambusCommonLibrary.Networking
         Console.WriteLine($"Error: {error.ErrorNum}: {error.Message}");
       });
 
-      connection.On<RigState>("state", (RigState state) =>
-      {
-        RigState__.OnNext(state);
-      });
+      connection.On<RigState>("state", (RigState state) => RigState__.OnNext(state));
+      connection.On<LockModel>("LockRig", (LockModel rigLock) => LockModel__.OnNext(rigLock));
+
       connection.On<BusConfigurationDB>("ReceiveConfiguration", (busConf) =>
       {
         var conf = JsonSerializer.Deserialize<RigConf>(busConf.Configuration);
         RigConfig__.OnNext(conf);
-        //rig!.OpenPort(conf);
       });
     }
 
@@ -100,7 +97,6 @@ namespace CoreHambusCommonLibrary.Networking
       Console.WriteLine("Sending state");
       try
       {
-
         await connection.InvokeAsync("RadioStateChange", state);
       }
       catch (Exception ex)

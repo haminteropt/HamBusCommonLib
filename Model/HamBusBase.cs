@@ -8,7 +8,6 @@ namespace HamBusCommonCore.Model
   public class HamBusBase
   {
     static public long SerialNum_ { get; set; } = 1;
-    private long myVar;
 
     public long SerialNum
     {
@@ -31,6 +30,5 @@ namespace HamBusCommonCore.Model
     {
       SerialNum_++;
     }
-
   }
 }
