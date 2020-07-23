@@ -1,10 +1,11 @@
 ﻿
 using System;
 using BusMaster.Model;
+using HamBusCommonCore.Model;
 
 namespace CoreHambusCommonLibrary.DataLib
 {
-  public class BusConfigurationDB
+  public class BusConfigurationDB : HamBusBase
   {
     public long? Id { get; set; }
     public string Name { get; set; } = "";

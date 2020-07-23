@@ -1,9 +1,10 @@
 ﻿using System;
+using HamBusCommonCore.Model;
 
 namespace HamBusCommmonCore
 
 {
-  public class RigState : ICloneable
+  public class RigState : HamBusBase, ICloneable
   {
   #nullable enable
     public string? Name {get; set;}

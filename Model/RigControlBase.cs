@@ -102,11 +102,11 @@ namespace HamBusCommonCore.Model
     public abstract void SetFrequencyB(long freq);
     public abstract void SetMode(string mode);
     #endregion
-    public virtual void OpenPort(RigConf port)
+    public virtual void OpenPort()
     {
-      SigRCon.RigConfig__.Subscribe<RigConf>((conf) =>
+      SigRCon.RigConfig__.Subscribe<RigConf>((port) =>
       {
-
+        Console.WriteLine("got rx event");
         if (serialPort != null && serialPort.IsOpen)
         {
           serialPort.Close();
