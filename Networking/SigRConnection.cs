@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using CoreHambusCommonLibrary.DataLib;
 using CoreHambusCommonLibrary.Model;
+using CoreHambusCommonLibrary.Services;
 using HamBusCommmonCore;
 using HamBusCommonCore.Model;
 using Microsoft.AspNetCore.SignalR.Client;

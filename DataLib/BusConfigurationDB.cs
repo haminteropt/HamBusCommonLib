@@ -3,7 +3,7 @@ using System;
 using BusMaster.Model;
 using HamBusCommonCore.Model;
 
-namespace CoreHambusCommonLibrary.DataLib
+namespace CoreHambusCommonLibrary.Services
 {
   public class BusConfigurationDB : HamBusBase
   {
@@ -13,6 +13,7 @@ namespace CoreHambusCommonLibrary.DataLib
     public BusType BusType { get; set; } = BusType.Unknown;
 
     public string Configuration { get; set; } = "{}";
+
 
   }
 }
