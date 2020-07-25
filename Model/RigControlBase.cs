@@ -16,6 +16,7 @@ namespace HamBusCommonCore.Model
     public abstract void SetState(RigState state);
     private Thread? readThread;
     private Thread? pollThread;
+    public  bool PausePolling { get; set; } = false;
 
     public SigRConnection SigRCon = SigRConnection.Instance;
 

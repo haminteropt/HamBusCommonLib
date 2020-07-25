@@ -33,9 +33,9 @@ namespace CoreHambusCommonLibrary.Networking
     }
     #endregion
     public HubConnection? connection = null;
-    public ReplaySubject<RigState> RigState__ { get; set; } = new System.Reactive.Subjects.ReplaySubject<RigState>(1);
+    public Subject<RigState> RigState__ { get; set; } = new System.Reactive.Subjects.Subject<RigState>();
     public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
-    public ReplaySubject<RigConf> RigConfig__ { get; set; } = new ReplaySubject<RigConf>(1);
+    public Subject<RigConf> RigConfig__ { get; set; } = new Subject<RigConf>();
     public Subject<LockModel> LockModel__ { get; set; } = new Subject<LockModel>();
 
     public async Task<HubConnection> StartConnection(string url)
@@ -93,7 +93,7 @@ namespace CoreHambusCommonLibrary.Networking
     }
 
 
-    public async void SendRigState(RigState state, Action<string>? cb = null)
+    public async void SendRigState(RigState state)
     {
       Console.WriteLine("Sending state");
       try
