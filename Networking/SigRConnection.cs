@@ -33,7 +33,7 @@ namespace CoreHambusCommonLibrary.Networking
     }
     #endregion
     public HubConnection? connection = null;
-    public Subject<RigState> RigState__ { get; set; } = new System.Reactive.Subjects.Subject<RigState>();
+    public Subject<RigState> RigState__ { get; set; } = new Subject<RigState>();
     public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
     public Subject<RigConf> RigConfig__ { get; set; } = new Subject<RigConf>();
     public Subject<LockModel> LockModel__ { get; set; } = new Subject<LockModel>();
