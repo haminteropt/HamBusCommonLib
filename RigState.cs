@@ -153,7 +153,7 @@ namespace HamBusCommmonCore
       get { return statusStr_; }
       set
       {
-        if (!string(value, statusStr_)) dirty = true;
+        if (!string.Equals(value, statusStr_)) dirty = true;
         statusStr_ = value;
       }
     }
