@@ -109,9 +109,9 @@ namespace HamBusCommmonCore
       }
     }
 
-    private string? rit_;
+    private bool rit_;
 
-    public string? Rit
+    public bool Rit
     {
       get { return rit_; }
       set
@@ -165,7 +165,7 @@ namespace HamBusCommmonCore
       get { return split_; }
       set
       {
-        if (!string.Equals(split_, value) dirty = true;
+        if (!string.Equals(split_, value)) dirty = true;
         split_ = value;
       }
     }
@@ -193,9 +193,9 @@ namespace HamBusCommmonCore
         vfo_ = value;
       }
     }
-    private string? xit_;
+    private bool xit_;
 
-    public string? Xit
+    public bool Xit
     {
       get { return xit_; }
       set

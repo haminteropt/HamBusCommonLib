@@ -11,9 +11,9 @@ namespace HamBusCommonCore.Model
     public RigControlBase()
     {
     }
-
+    public bool IsStateLocked;
     public RigState prevState = new RigState();
-    public abstract void SetState(RigState state);
+    public abstract void SetStateFromBus(RigState state);
     private Thread? readThread;
     private Thread? pollThread;
     public  bool PausePolling { get; set; } = false;
@@ -98,10 +98,10 @@ namespace HamBusCommonCore.Model
 
 
     #region commands
-    public abstract void SetFrequency(long freq);
-    public abstract void SetFrequencyA(long freq);
-    public abstract void SetFrequencyB(long freq);
-    public abstract void SetMode(string mode);
+    public abstract void SetLocalFrequency(long freq);
+    public abstract void SetLocalFrequencyA(long freq);
+    public abstract void SetLocalFrequencyB(long freq);
+    public abstract void SetLocalMode(string mode);
     #endregion
     public virtual void OpenPort()
     {

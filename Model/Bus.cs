@@ -10,6 +10,6 @@ namespace CoreHambusCommonLibrary.Model
 
     public string MasterHost { get; set; } = "localhost";
     public int MasterPort { get; set; } = 7300;
-    public string Name  { get; set; } = "";
+    public static string Name  { get; set; } = "";
   }
 }
