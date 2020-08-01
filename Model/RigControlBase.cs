@@ -2,7 +2,7 @@
 using System.IO.Ports;
 using System.Threading;
 using CoreHambusCommonLibrary.Networking;
-using HamBusCommmonCore;
+using HamBusCommmonStd;
 
 namespace HamBusCommonCore.Model
 {

@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RigState.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DataLib\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
@@ -14,6 +18,10 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="3.1.5" />
     <PackageReference Include="System.IO.Ports" Version="4.7.0" />
     <PackageReference Include="System.Reactive" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HamBusCommonStd\HamBusCommonStd\HamBusCommonStd.csproj" />
   </ItemGroup>
 
 </Project>

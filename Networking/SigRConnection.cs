@@ -2,10 +2,9 @@
 using System.Reactive.Subjects;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CoreHambusCommonLibrary.DataLib;
 using CoreHambusCommonLibrary.Model;
 using CoreHambusCommonLibrary.Services;
-using HamBusCommmonCore;
+using HamBusCommmonStd;
 using HamBusCommonCore.Model;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -37,7 +36,7 @@ namespace CoreHambusCommonLibrary.Networking
     public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
     public Subject<RigConf> RigConfig__ { get; set; } = new Subject<RigConf>();
     public Subject<LockModel> LockModel__ { get; set; } = new Subject<LockModel>();
-
+    private int dbCounter=0;
     public async Task<HubConnection> StartConnection(string url)
     {
 
@@ -95,10 +94,11 @@ namespace CoreHambusCommonLibrary.Networking
 
     public async void SendRigState(RigState state)
     {
-      Console.WriteLine("Sending state");
+      if (state.IsDirty() == false) return;
       try
       {
         await connection.InvokeAsync("RadioStateChange", state);
+        state.ClearDirty();
       }
       catch (Exception ex)
       {
