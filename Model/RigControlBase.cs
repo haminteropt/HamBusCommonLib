@@ -22,7 +22,7 @@ namespace HamBusCommonCore.Model
 
     public string? Name { get; set; }
     #region connection info
-    public int PollTimer { get; set; } = 3000;
+    public int PollTimer { get; set; } = 500;
     public RigConf? portConf;
     protected SerialPort? serialPort;
     protected SigRConnection? sigConnect = null;
