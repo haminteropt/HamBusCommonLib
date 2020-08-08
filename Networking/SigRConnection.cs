@@ -35,7 +35,7 @@ namespace CoreHambusCommonLibrary.Networking
     public ReplaySubject<HamBusError> HBErrors__ { get; set; } = new ReplaySubject<HamBusError>(1);
     public Subject<RigConf> RigConfig__ { get; set; } = new Subject<RigConf>();
     public Subject<LockModel> LockModel__ { get; set; } = new Subject<LockModel>();
-    private int dbCounter=0;
+
     public async Task<HubConnection> StartConnection(string url)
     {
 
