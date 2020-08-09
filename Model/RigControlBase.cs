@@ -31,7 +31,7 @@ namespace HamBusCommonCore.Model
 
     abstract protected void initStartupState();
     public abstract void ReadSerialPortThread();
-    protected virtual void SendSerial(string str, bool isStateLock = false)
+    protected virtual void SendSerial(string str)
     {
       if (serialPort == null) return;
       serialPort.Write(str);
