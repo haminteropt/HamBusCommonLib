@@ -135,7 +135,7 @@ namespace HamBusCommonCore.Model
         if (port.stopBits != null)
           serialPort.StopBits = ToStop(port.stopBits);
 
-        serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
+        //serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
 
         serialPort.Open();
         continueReadingSerialPort = true;
