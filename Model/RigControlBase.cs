@@ -64,13 +64,10 @@ namespace HamBusCommonCore.Model
       {
         case "none":
           return StopBits.None;
-        case "one":
         case "1":
           return StopBits.One;
-        case "onepointfive":
         case "1.5":
           return StopBits.OnePointFive;
-        case "two":
         case "2":
           return StopBits.Two;
         default:
@@ -128,7 +125,7 @@ namespace HamBusCommonCore.Model
 
         // Allow the user to set the appropriate properties.
         serialPort.PortName = port.commPortName;
-        if (port.baudRate != null)
+        //if (port.baudRate != null)
           serialPort.BaudRate = (int)port.baudRate;
         serialPort.Parity = ToParity(port.parity!);
         serialPort.DataBits = 8;
