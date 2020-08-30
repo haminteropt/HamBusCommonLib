@@ -124,13 +124,13 @@ namespace HamBusCommonCore.Model
         pollThread = new Thread(PollRig);
 
         // Allow the user to set the appropriate properties.
-        serialPort.PortName = port.commPortName;
+        serialPort.PortName = port.CommPortName;
         //if (port.baudRate != null)
-          serialPort.BaudRate = (int)port.baudRate;
-        serialPort.Parity = ToParity(port.parity!);
+          serialPort.BaudRate = (int)port.BaudRate;
+        serialPort.Parity = ToParity(port.Parity!);
         serialPort.DataBits = 8;
-        if (port.stopBits != null)
-          serialPort.StopBits = ToStop(port.stopBits);
+        if (port.StopBits != null)
+          serialPort.StopBits = ToStop(port.StopBits);
 
         //serialPort.Handshake = port.handshake == null ? Handshake.None : (Handshake)port.handshake;
 
