@@ -21,7 +21,7 @@ namespace HamBusCommonCore.Model
     public SigRConnection SigRCon = SigRConnection.Instance;
 
     public string? Name { get; set; }
-    #region connection info
+    #region connection properties
     public int PollTimer { get; set; } = 500;
     public RigConf? portConf;
     protected SerialPort? serialPort;
@@ -98,13 +98,13 @@ namespace HamBusCommonCore.Model
     public abstract void SetLocalFrequency(long freq);
     public abstract void SetLocalFrequencyA(long freq);
     public abstract void SetLocalFrequencyB(long freq);
-    public abstract void SetLocalMode(string mode);
+    public abstract void SetLocalMode(string? mode);
     #endregion
     public virtual void OpenPort()
     {
       SigRCon.RigConfig__.Subscribe<RigConf>((port) =>
       {
-        Console.WriteLine("got rx event");
+        Console.WriteLine("got configuration message");
         if (serialPort != null && serialPort.IsOpen)
         {
           serialPort.Close();
