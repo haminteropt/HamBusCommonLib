@@ -23,7 +23,6 @@ namespace HamBusCommonCore.Model
       };
 
       string output = JsonSerializer.Serialize(this, options);
-      Console.WriteLine($"ToString output: {output}");
       return output;
     }
     public virtual void IncSerial()

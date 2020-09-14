@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Serilog;
 
 namespace CoreHambusCommonLibrary.DataLib
 {
@@ -31,7 +32,7 @@ namespace CoreHambusCommonLibrary.DataLib
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Create Data Directory Error: {e.Message}");
+                Log.Error("BusInit:35: Create Data Directory Error: {@e}",e);
                 throw e;
             }
         }

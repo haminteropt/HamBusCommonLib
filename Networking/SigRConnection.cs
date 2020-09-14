@@ -6,6 +6,7 @@ using CoreHambusCommonLibrary.Model;
 using HamBusCommonCore.Model;
 using HamBusCommonStd;
 using Microsoft.AspNetCore.SignalR.Client;
+using Serilog;
 
 namespace CoreHambusCommonLibrary.Networking
 {
@@ -51,7 +52,7 @@ namespace CoreHambusCommonLibrary.Networking
       };
       connection.Reconnecting += error =>
       {
-        Console.WriteLine($"Connection Lost attempting to reconnect: {error.Message}");
+        Log.Error("SigRConnection: 55: Connection Lost attempting to reconnect: {@error}", error);
 
         // Notify users the connection was lost and the client is reconnecting.
         // Start queuing or dropping messages.
@@ -66,7 +67,7 @@ namespace CoreHambusCommonLibrary.Networking
       }
       catch (Exception ex)
       {
-        Console.WriteLine(ex.Message);
+        Log.Error("SigRConnect:71: Exception {@ex}", ex);
         Environment.Exit(-1);
       }
       return connection;
@@ -77,10 +78,14 @@ namespace CoreHambusCommonLibrary.Networking
       connection.On<HamBusError>("ErrorReport", (HamBusError error) =>
       {
         HBErrors__.OnNext(error);
-        Console.WriteLine($"Error: {error.ErrorNum}: {error.Message}");
+        Log.Error("SigRConnection: 82: Connection Lost attempting to reconnect: {@error}", error);
       });
 
-      connection.On<RigState>("state", (RigState state) => RigState__.OnNext(state));
+      connection.On<RigState>("state", (RigState state) =>
+        {
+          Log.Verbose("SigRConnection:86:  got state change {@state}", state);
+          RigState__.OnNext(state);
+        });
       connection.On<LockModel>("LockRig", (LockModel rigLock) => LockModel__.OnNext(rigLock));
 
       connection.On<BusConfigurationDB>("ReceiveConfiguration", (busConf) =>
@@ -101,7 +106,8 @@ namespace CoreHambusCommonLibrary.Networking
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"Error: {ex.Message}");
+      
+        Log.Error("SigRConnect:110: Exception {@ex}", ex);
       }
     }
   }

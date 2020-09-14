@@ -3,6 +3,7 @@ using System.IO.Ports;
 using System.Threading;
 using CoreHambusCommonLibrary.Networking;
 using HamBusCommonStd;
+using Serilog;
 
 namespace HamBusCommonCore.Model
 {
@@ -16,7 +17,7 @@ namespace HamBusCommonCore.Model
     public abstract void SetStateFromBus(RigState state);
     private Thread? readThread;
     private Thread? pollThread;
-    public  bool PausePolling { get; set; } = false;
+    public bool PausePolling { get; set; } = false;
 
     public SigRConnection SigRCon = SigRConnection.Instance;
 
@@ -104,7 +105,7 @@ namespace HamBusCommonCore.Model
     {
       SigRCon.RigConfig__.Subscribe<RigConf>((port) =>
       {
-        Console.WriteLine("got configuration message");
+        Log.Verbose("RigControlBase: got configuration message {@port}", port);
         if (serialPort != null && serialPort.IsOpen)
         {
           serialPort.Close();
@@ -126,7 +127,7 @@ namespace HamBusCommonCore.Model
         // Allow the user to set the appropriate properties.
         serialPort.PortName = port.CommPortName;
         //if (port.baudRate != null)
-          serialPort.BaudRate = (int)port.BaudRate;
+        serialPort.BaudRate = (int)port.BaudRate;
         serialPort.Parity = ToParity(port.Parity!);
         serialPort.DataBits = 8;
         if (port.StopBits != null)
